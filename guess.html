@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <style>
+        :root{
+            --color: ;
+            --background: #121212;
+            --border: crimson;
+        }
+
+        *{
+            box-sizing: border-box;
+            outline: none;
+            user-select: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            font-family: sans-serif;
+        }
+
+        html, body{
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            background: var(--background);
+        }
+
+        h1{
+            color: white;
+        }
+
+        span{
+            color: var(--border);
+        }
+
+        #container{
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        #number{
+            font-weight: bold;
+            text-align: center;
+            font-size: 124px;
+            width: 40%;
+            border: 0;
+            background: transparent;
+            margin: 10px;
+            color: white;
+        }
+
+        #number:focus, #number:active{
+            background: transparent;
+        }
+
+        #guess{
+            padding: 12px 72px;
+            font-size: 32px;
+            border-radius: 10px;
+            border: 2px solid var(--border);
+            color: var(--border);
+            background: transparent;
+            cursor: pointer;
+            transition: .2s;
+        }
+
+        #guess:hover{
+            background: var(--border);
+            color: var(--background);
+        }
+    </style>
+    <meta charset="UTF-8">
+    <title>Guess the Number</title>
+</head>
+<body onload="newNumber()">
+<div id="container">
+    <h1>Guess The Number</h1>
+    <span id="textNumber">
+    </span>
+    <br>
+    <input id="number" placeholder="0" type="number"/>
+    <br>
+    <button id="guess">Guess</button>
+</div>
+<script>
+    let onbutton = 0;
+    let guesses = 1;
+    let guessNumber = 0;
+    let button = document.getElementById("guess");
+
+    button.onclick = guess;
+
+    function newNumber() {
+        onbutton = 0;
+        guesses = 1;
+        guessNumber = Math.floor((Math.random()*100));
+        document.getElementById("textNumber").innerHTML = "";
+        document.getElementById("number").value = "";
+        button.innerHTML = "Guess";
+    }
+
+    function guess() {
+        if (onbutton === 0){
+            if(guessNumber < document.getElementById("number").value) {
+                document.getElementById("textNumber").innerHTML = "<b>Hint:</b> Smaller";
+            }
+            else if(guessNumber > document.getElementById("number").value){
+                document.getElementById("textNumber").innerHTML = "<b>Hint:</b> Bigger";
+            }
+            else {
+                document.getElementById("textNumber").innerHTML = "You guest the number <b>" + guessNumber + " </b>with<b> " + guesses +"</b> guesses";
+                button.innerHTML = "New Game";
+                onbutton = 1;
+            }
+            guesses++;
+        }
+        else {
+            onbutton = 0;
+            setTimeout(newNumber, 0)
+        }
+
+    }
+</script>
+</body>
+</html>
